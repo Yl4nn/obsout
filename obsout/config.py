@@ -16,7 +16,7 @@ def load_vars(env: str, config:str, verbose: bool):
         log = logger()
 
     # Test if config file exists
-    config_dir = "/home/{}/.config/obsout".format(os.environ.get("USER"))
+    config_dir = os.path.join(os.path.expanduser("~"), ".config", "obsout")
    
     if os.path.exists(os.path.join(config_dir,JSON_FILENAME)):
         with open(os.path.join(config_dir,JSON_FILENAME),'r') as config_file:

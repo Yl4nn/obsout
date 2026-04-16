@@ -210,7 +210,7 @@ class Outline(LocalClient):
         """ Create all documents in a collection based on local documents """
 
         for document in local_collection.documents:
-            file = open(os.path.join(self.path,local_collection.name, document.name + '.md'))
+            file = open(os.path.join(self.path,local_collection.name, document.name + '.md'), 'r', encoding='utf-8')
 
             json_data = {
                 "title": document.name,
@@ -222,6 +222,10 @@ class Outline(LocalClient):
             self.client._make_request(RequestType.CREATE_DOCUMENT, json_data=json_data)
         
         self.client._refresh_client()
+
+    #def _clean_anchors(self, content: str) -> str:
+        #supprime les lignes d'ancres dans le contenu markdown
+        #return re.sub(r'<a id="[^"]+"></a>\n?', '', content)
 
     def _create_local_collections(self, collections: List[Collection]) -> None:
         """ Create missing client collections in vault """
@@ -242,7 +246,7 @@ class Outline(LocalClient):
             }
 
             data = json.loads(self.client._make_request(RequestType.RETRIEVE_DOCUMENT, json_data=json_data).text)['data']
-            file = open(os.path.join(self.path,client_collection.name,document.name + '.md'), 'w')
+            file = open(os.path.join(self.path,client_collection.name,document.name + '.md'), 'w', encoding='utf-8')
             file.write(data['text'])
             file.close()
 
@@ -292,7 +296,7 @@ class Outline(LocalClient):
     def _update_client_documents(self, collection: Collection) -> None:
         """ Update documents in client """
         for document in collection.documents:
-            file = open(os.path.join(self.path,collection.name,document.name + '.md'), 'r')
+            file = open(os.path.join(self.path,collection.name,document.name + '.md'), 'r', encoding='utf-8')
             json_data = {
                 "id": document.id,
                 "title": document.name,
