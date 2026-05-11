@@ -223,10 +223,6 @@ class Outline(LocalClient):
         
         self.client._refresh_client()
 
-    #def _clean_anchors(self, content: str) -> str:
-        #supprime les lignes d'ancres dans le contenu markdown
-        #return re.sub(r'<a id="[^"]+"></a>\n?', '', content)
-
     def _create_local_collections(self, collections: List[Collection]) -> None:
         """ Create missing client collections in vault """
         for collection in collections:
